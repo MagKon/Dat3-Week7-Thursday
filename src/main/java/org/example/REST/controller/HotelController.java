@@ -2,13 +2,12 @@ package org.example.REST.controller;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import io.javalin.validation.BodyValidator;
 import org.example.config.DAO.DAO;
 import org.example.persistence.Hotel;
 
 public class HotelController extends AController {
 
-    public HotelController(DAO<Object> dao) {
+    public HotelController(DAO<Hotel> dao) {
         super(dao);
     }
 
@@ -78,6 +77,13 @@ public class HotelController extends AController {
                     ctx.json(e.getMessage());
                 }
             }
+        };
+    }
+
+    public Handler brewCoffee() {
+        return ctx -> {
+            ctx.status(418);
+            ctx.json("I'm a teapot");
         };
     }
 

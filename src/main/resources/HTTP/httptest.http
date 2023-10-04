@@ -1,0 +1,2 @@
+GET {{url}}/room
+Content-Type: application/json

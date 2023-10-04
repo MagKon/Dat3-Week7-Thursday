@@ -1,6 +1,7 @@
 package org.example.persistence;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,6 @@ public class Hotel {
 
     private String address;
 
-    @OneToMany(mappedBy = "hotelId")
+    @OneToMany(mappedBy = "hotelId", fetch = FetchType.EAGER)
     private Set<Room> rooms;
 }

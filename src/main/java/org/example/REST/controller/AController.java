@@ -8,9 +8,9 @@ import java.util.List;
 
 @Getter
 public abstract class AController implements IController {
-    private final DAO<Object> dao;
+    private final DAO dao;
 
-    public AController(DAO<Object> dao) {
+    public AController(DAO dao) {
         this.dao = dao;
     }
 

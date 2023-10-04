@@ -9,7 +9,7 @@ import org.example.persistence.Room;
 
 public class RoomController extends AController {
 
-    public RoomController(DAO<Object> dao) {
+    public RoomController(DAO<Room> dao) {
         super(dao);
     }
 
@@ -19,6 +19,8 @@ public class RoomController extends AController {
             Room room = validateRoom(ctx);
 
             Room savedHotel = (Room) getDao().merge(room);
+
+            ctx.contentType("application/json");
             ctx.status(201);
             ctx.json(savedHotel);
 
@@ -45,6 +47,7 @@ public class RoomController extends AController {
             Room savedRoom = (Room) getDao().merge(dbRoom);
 
             // Return updated Hotel
+            ctx.contentType("application/json");
             ctx.status(200);
             ctx.json(savedRoom);
 
@@ -71,6 +74,7 @@ public class RoomController extends AController {
             else {
                 try {
                     getDao().delete(room);
+                    ctx.contentType("application/json");
                     ctx.status(200);
                     ctx.json("Deleted element with id: " + ctx.pathParam("id"));
                 }
@@ -80,6 +84,13 @@ public class RoomController extends AController {
                 }
 
             }
+        };
+    }
+
+    public Handler brewCoffee() {
+        return ctx -> {
+            ctx.status(418);
+            ctx.json("I'm a teapot");
         };
     }
 
