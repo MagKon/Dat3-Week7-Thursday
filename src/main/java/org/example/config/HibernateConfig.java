@@ -61,6 +61,8 @@ public class HibernateConfig {
 
     private static void getAnnotationConfiguration(Configuration configuration) {
         // add annotated classes
+        configuration.addAnnotatedClass(org.example.persistence.Hotel.class);
+        configuration.addAnnotatedClass(org.example.persistence.Room.class);
     }
 
     public static EntityManagerFactory getEntityManagerFactoryConfig() {
