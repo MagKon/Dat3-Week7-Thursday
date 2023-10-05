@@ -1,1 +1,2 @@
-GET {{url}}/hotel
+GET {{url}}/hotel/2
+Content-Type: application/json

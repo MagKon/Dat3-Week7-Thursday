@@ -3,6 +3,7 @@ package org.example.REST.controller;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.config.DAO.DAO;
+import org.example.exception.ApiException;
 import org.example.persistence.Hotel;
 
 public class HotelController extends AController {
@@ -31,9 +32,7 @@ public class HotelController extends AController {
             // Get Hotel from DB
             Hotel dbHotel = (Hotel) getDao().findById(Integer.parseInt(ctx.pathParam("id")));
             if (dbHotel == null) {
-                ctx.status(404);
-                ctx.json("No hotel found with id: " + ctx.pathParam("id"));
-                return;
+                throw new ApiException(404, "No hotel found with id: " + ctx.pathParam("id"));
             }
 
             // Update Hotel
@@ -58,13 +57,15 @@ public class HotelController extends AController {
                 hotel = (Hotel) getDao().findById(Integer.parseInt(ctx.pathParam("id")));
             }
             catch (Exception e) {
-                ctx.status(400);
-                ctx.json(e.getMessage());
+//                ctx.status(400);
+//                ctx.json(e.getMessage());
+                throw new ApiException(400, e.getMessage());
             }
 
             if (hotel == null) {
-                ctx.status(404);
-                ctx.json("No element found with id: " + ctx.pathParam("id"));
+//                ctx.status(404);
+//                ctx.json("No element found with id: " + ctx.pathParam("id"));
+                throw new ApiException(404, "No element found with id: " + ctx.pathParam("id"));
             }
             else {
                 try {
@@ -73,8 +74,9 @@ public class HotelController extends AController {
                     ctx.json("Deleted element with id: " + ctx.pathParam("id"));
                 }
                 catch (Exception e) {
-                    ctx.status(400);
-                    ctx.json(e.getMessage());
+//                    ctx.status(400);
+//                    ctx.json(e.getMessage());
+                    throw new ApiException(400, e.getMessage());
                 }
             }
         };

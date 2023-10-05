@@ -4,6 +4,7 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.validation.BodyValidator;
 import org.example.config.DAO.DAO;
+import org.example.exception.ApiException;
 import org.example.persistence.Hotel;
 import org.example.persistence.Room;
 
@@ -35,9 +36,10 @@ public class RoomController extends AController {
             // Get Room from DB
             Room dbRoom = (Room) getDao().findById(Integer.parseInt(ctx.pathParam("id")));
             if (dbRoom == null) {
-                ctx.status(404);
-                ctx.json("No hotel found with id: " + ctx.pathParam("id"));
-                return;
+//                ctx.status(404);
+//                ctx.json("No hotel found with id: " + ctx.pathParam("id"));
+//                return;
+                throw new ApiException(404, "No room found with id: " + ctx.pathParam("id"));
             }
 
             // Update Room
@@ -63,13 +65,15 @@ public class RoomController extends AController {
                 room = (Room) getDao().findById(Integer.parseInt(ctx.pathParam("id")));
             }
             catch (Exception e) {
-                ctx.status(400);
-                ctx.json("Invalid id: " + ctx.pathParam("id"));
-                return;
+//                ctx.status(400);
+//                ctx.json("Invalid id: " + ctx.pathParam("id"));
+//                return;
+                throw new ApiException(400, "Invalid id: " + ctx.pathParam("id"));
             }
             if (room == null) {
-                ctx.status(404);
-                ctx.json("No element found with id: " + ctx.pathParam("id"));
+//                ctx.status(404);
+//                ctx.json("No element found with id: " + ctx.pathParam("id"));
+                throw new ApiException(404, "No element found with id: " + ctx.pathParam("id"));
             }
             else {
                 try {
@@ -79,8 +83,9 @@ public class RoomController extends AController {
                     ctx.json("Deleted element with id: " + ctx.pathParam("id"));
                 }
                 catch (Exception e) {
-                    ctx.status(400);
-                    ctx.json(e.getMessage());
+//                    ctx.status(400);
+//                    ctx.json(e.getMessage());
+                    throw new ApiException(400, e.getMessage());
                 }
 
             }

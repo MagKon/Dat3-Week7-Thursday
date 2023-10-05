@@ -3,6 +3,7 @@ package org.example.REST.controller;
 import io.javalin.http.Handler;
 import lombok.Getter;
 import org.example.config.DAO.DAO;
+import org.example.exception.ApiException;
 
 import java.util.List;
 
@@ -17,27 +18,22 @@ public abstract class AController implements IController {
     public Handler getAll() {
         return ctx -> {
             List<?> elements = dao.getAll();
-            if (elements.isEmpty()) {
-                ctx.status(404);
-                ctx.json("No elements found");
-            }
-            else {
-                ctx.json(elements);
-                ctx.status(200);
-            }
+
+            ctx.json(elements);
+            ctx.status(200);
+
         };
     }
 
     public Handler getById() {
         return ctx -> {
-            Object element = dao.findById(Integer.parseInt(ctx.pathParam("id")));
-            if (element == null) {
-                ctx.status(404);
-                ctx.json("No element found with id: " + ctx.pathParam("id"));
-            }
-            else {
+            try {
+                Object element = dao.findById(ctx.pathParam("id"));
                 ctx.json(element);
                 ctx.status(200);
+            }
+            catch (Exception e) {
+                throw new ApiException(404, "No element found with id: " + ctx.pathParam("id"));
             }
         };
     }
