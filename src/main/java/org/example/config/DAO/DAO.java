@@ -101,7 +101,7 @@ abstract class ADAO<T> implements IDAO<T> {
      * This query finds all entities of the type specified.
      * @return A list of all entities of the type specified.
      */
-    public List<T> getAll() {
+    public List<T> findAll() {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             return entityManager.createQuery("SELECT t FROM " + this.entityClass.getSimpleName() + " t", entityClass).getResultList();
         }
@@ -118,16 +118,16 @@ abstract class ADAO<T> implements IDAO<T> {
      * @param t The entity to save.
      * @return True if the entity was saved successfully, false if not.
      */
-    public Boolean save(T t) {
+    public T create(T t) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             entityManager.getTransaction().begin();
             entityManager.persist(t);
             entityManager.getTransaction().commit();
-            return true;
+            return t;
         }
         catch (ConstraintViolationException e) {
             System.out.println("Constraint violation: " + e.getMessage());
-            return false;
+            return null;
         }
     }
 
@@ -216,8 +216,8 @@ interface IDAO<T> {
     EntityManagerFactory getEntityManagerFactory();
     void setEntityManagerFactory(EntityManagerFactory emf);
     T findById(Object id);
-    List<T> getAll();
-    Boolean save(T t);
+    List<T> findAll();
+    T create(T t);
     T merge(T t);
     void delete(T t);
     void truncate();
