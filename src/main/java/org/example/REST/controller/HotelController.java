@@ -3,6 +3,7 @@ package org.example.REST.controller;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.DTO.HotelDTO;
+import org.example.REST.converter.HotelConverter;
 import org.example.REST.converter.IConverter;
 import org.example.config.DAO.DAO;
 import org.example.exception.ApiException;
@@ -10,8 +11,8 @@ import org.example.persistence.Hotel;
 
 public class HotelController extends AController<Hotel, HotelDTO> {
 
-    public HotelController(DAO<Hotel> dao, IConverter<Hotel, HotelDTO> converter) {
-        super(dao, converter);
+    public HotelController(DAO<Hotel> dao) {
+        super(dao, new HotelConverter());
     }
 
 //    public HotelController(DAO<Hotel> dao) {

@@ -10,6 +10,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class RoomRouter {
     public static EndpointGroup getRoomRoutes() {
+
         RoomController roomController = new RoomController(new DAO<>(Room.class, HibernateConfig.getEntityManagerFactoryConfig()));
         return () -> path("/room", () ->
         {

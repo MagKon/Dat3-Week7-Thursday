@@ -1,2 +1,2 @@
-POST {{url}}/room/brew
+GET {{url}}/hotel/
 Content-Type: application/json

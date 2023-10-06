@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class AConverter<DTO, Entity> implements IConverter<DTO, Entity> {
+public abstract class AConverter<Entity, DTO> implements IConverter<Entity, DTO> {
 
     private final Function<DTO, Entity> fromDto;
     private final Function<Entity, DTO> fromEntity;
